@@ -1,6 +1,3 @@
-/* Old Windows titlebar - remove this @import if you wish to use default titlebar */
-@import url('https://chloecinders.github.io/visual-refresh-compact-title-bar/desktop.css');
-
 :root {
 	/*
 	 * Background image variables
@@ -30,8 +27,8 @@
 	/*
 	 * Home image variables
 	 */
-	--home-button-image: url('https://discordstyles.github.io/FrostedGlass/discord.svg'); /* Home button image | URL MUST BE A DIRECT LINK (ending in .jpg, .jpeg, .png, .gif) */
-	--home-button-size: 60%; /* Size of the home button image | DEFAUT: cover */
+	--home-button-image: url('https://gibbu.github.io/BetterDiscord-Themes/FrostedGlass/assets/discord.svg'); /* Home button image | URL MUST BE A DIRECT LINK (ending in .jpg, .jpeg, .png, .gif) */
+	--home-button-size: cover; /* Size of the home button image | DEFAUT: cover */
 	--home-button-position: center; /* Position of home button image | DEAFULT: center */
 
 	/*
@@ -59,7 +56,7 @@
 	/*
 	 * Other variables 
 	 */
-	--window-padding: 20px; /* Spacing around the Discord window | DEFAULT: 20px */
+	--window-padding: 0px; /* Spacing around the Discord window | DEFAULT: 0px */
 	--window-roundness: 10px; /* Roundness of Discord | DEFAULT: 10px */
 	--scrollbar-colour: rgb(255, 255, 255, 0.05); /* DEFAULT: rgb(255,255,255,0.05) */
 	--link-colour: #00b0f4; /* DEFAULT: #00b0f4 */

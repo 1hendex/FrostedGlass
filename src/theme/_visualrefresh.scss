@@ -1,0 +1,662 @@
+/* ==========================================================================
+   Modern Discord (Visual Refresh) Compatibility Layer for Frosted Glass
+   ========================================================================== */
+
+/* Token overrides */
+:is(.theme-dark, .theme-light, .theme-darker, .theme-midnight, :root) {
+  --background-primary: transparent !important;
+  --background-secondary: rgba(0, 0, 0, 0.3) !important;
+  --background-secondary-alt: transparent !important;
+  --background-tertiary: transparent !important;
+  --background-floating: rgba(0, 0, 0, 0.6) !important;
+  --background-mobile-primary: transparent !important;
+  --background-mobile-secondary: transparent !important;
+  --bg-base-primary: transparent !important;
+  --bg-base-secondary: transparent !important;
+  --bg-base-tertiary: transparent !important;
+  --bg-surface-raised: rgba(0, 0, 0, 0.3) !important;
+  --bg-surface-overlay: rgba(0, 0, 0, 0.6) !important;
+  --bg-mod-faint: rgba(255, 255, 255, 0.03) !important;
+  --bg-mod-subtle: rgba(255, 255, 255, 0.06) !important;
+  --channeltextarea-background: rgba(255, 255, 255, 0.05) !important;
+  --input-background: rgba(255, 255, 255, 0.05) !important;
+  --modal-background: rgba(18, 18, 24, 0.75) !important;
+  --modal-footer-background: rgba(10, 10, 14, 0.75) !important;
+  --interactive-normal: #dbdee1 !important;
+  --interactive-hover: #ffffff !important;
+  --interactive-active: #ffffff !important;
+}
+
+/* App & Window Transparency */
+html,
+body,
+#app-mount,
+.appMount_gEkNtR,
+.app_YRXZu0,
+.app_QbT-Jy,
+div[class*="appMount_"],
+div[class*="app_"],
+div[class*="layers_"],
+.baseLayer_Fd0FEH,
+div[class*="baseLayer_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Background image & frosted blur (Zero-lag hardware-cached) */
+.bg_Fd0FEH,
+div[class*="bg_"] {
+  position: fixed !important;
+  inset: -10px !important;
+  background: var(--background-image) var(--background-image-position, center) / var(--background-image-size, cover) no-repeat fixed !important;
+  filter: blur(var(--background-image-blur, 5px)) saturate(1.1) !important;
+  z-index: -2 !important;
+}
+.bg_Fd0FEH::after,
+div[class*="bg_"]::after {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background-color: rgba(var(--tint-colour, 0, 0, 0), var(--tint-brightness, 0)) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Settings layer covers baseLayer with blurred wallpaper backdrop to eliminate duplicate buttons and bleed */
+div[class*="layers_"] > div[class*="layer_"]:not([class*="baseLayer_"]) {
+  background: var(--background-image) var(--background-image-position, center) / var(--background-image-size, cover) no-repeat fixed !important;
+}
+div[class*="layers_"] > div[class*="layer_"]:not([class*="baseLayer_"])::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: -10px !important;
+  background: inherit !important;
+  filter: blur(var(--background-image-blur, 5px)) saturate(1.1) !important;
+  z-index: -1 !important;
+}
+div[class*="layers_"] > div[class*="layer_"]:not([class*="baseLayer_"])::after {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background-color: rgba(var(--tint-colour, 0, 0, 0), 0.4) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Draggable titlebar */
+.bar_3zSH5d,
+div[class*="titleBar_"] {
+  -webkit-app-region: drag;
+  background: transparent !important;
+  border: none !important;
+}
+div[class*="winButton_"],
+.winButton_3zSH5d {
+  -webkit-app-region: no-drag !important;
+  pointer-events: auto !important;
+}
+
+/* Server list (guilds) */
+.guilds_pog62O,
+nav[class*="guilds_"],
+div[class*="guilds_"] {
+  background: transparent !important;
+}
+.guilds_pog62O .tree_5dqHTG,
+nav[class*="guilds_"] ul[data-list-id="guildsnav"],
+nav[class*="guilds_"] div[class*="tree_"] {
+  background-color: rgb(0, 0, 0, var(--serverlist-brightness)) !important;
+}
+
+/* Home button icon (properly proportioned) */
+.childWrapper_JJ-hgR,
+nav[class*="guilds_"] div[class*="childWrapper_"] {
+  background: var(--gradient) !important;
+  background-color: transparent !important;
+}
+.childWrapper_JJ-hgR > svg,
+nav[class*="guilds_"] div[class*="childWrapper_"] > svg {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: var(--home-button-image) center/var(--home-button-size, cover) no-repeat !important;
+}
+.childWrapper_JJ-hgR svg path,
+nav[class*="guilds_"] div[class*="childWrapper_"] svg path {
+  display: none !important;
+}
+
+/* Sidebar (Channels & DMs) */
+.sidebar_pog62O,
+.sidebar_cR4ic2,
+.sidebarContainer_rhYbEd,
+nav[class*="sidebar_"],
+div[class*="sidebar_"] {
+  border-radius: 0 !important;
+  background: rgb(0, 0, 0, var(--left-brightness)) !important;
+  border-right: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-left: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+.sidebar_pog62O:after,
+.sidebar_pog62O::after,
+div[class*="sidebar_"]:after,
+div[class*="sidebar_"]::after {
+  display: none !important;
+}
+.sidebarList_pog62O,
+div[class*="sidebarList_"] {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.container_H5ozaj,
+.privateChannels_u88IQl,
+div[class*="container_H5ozaj"],
+div[class*="privateChannels_"],
+nav[class*="privateChannels_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+.scroller_Bce46W,
+div[class*="privateChannels_"] [class*="scroller_"],
+div[class*="container_H5ozaj"] [class*="scroller_"] {
+  background: transparent !important;
+}
+.panels_pog62O,
+div[class*="panels_"] {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Bottom user panel action buttons (Activity controller, mic, deafen, settings) */
+.panels_pog62O button[class*="button_"],
+div[class*="panels_"] button[class*="button_"] {
+  color: var(--interactive-normal, #dbdee1) !important;
+}
+.panels_pog62O button[class*="button_"]:hover,
+div[class*="panels_"] button[class*="button_"]:hover {
+  color: var(--interactive-hover, #ffffff) !important;
+}
+.panels_pog62O button[class*="button_"] svg,
+div[class*="panels_"] button[class*="button_"] svg {
+  color: currentColor !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+/* Chat Area */
+.chat_z_gUBg,
+div[class*="chat_"] {
+  border: none !important;
+  background: rgb(0, 0, 0, var(--middle-brightness)) !important;
+}
+.chatContent_z_gUBg,
+main[class*="chatContent_"],
+div[class*="chatContent_"] {
+  background-color: transparent !important;
+  text-shadow: 0 2px 5px rgb(0, 0, 0, var(--text-shadow, 1)) !important;
+}
+.scroller_wmABvb,
+div[class*="scroller_wmABvb"],
+div[class*="messagesWrapper_"],
+main[class*="chatContent_"] [class*="scroller_"] {
+  background: transparent !important;
+}
+.chatGradientBase_8AE1Qq,
+.chatGradientBase__36d07,
+.formWithLoadedChatInput_z_gUBg:before,
+form[class*="form_"]::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Message input / Textarea (FrostedGlass borderless style) */
+.form_z_gUBg div[class*="channelTextArea_"],
+.channelTextArea_2x8-Qn,
+div[class*="channelTextArea_"] {
+  background: var(--channeltextarea-background) !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+form[class*="form_"] div[class*="themedBackground_"] {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Friends page ("Друзі" - 1:1 FrostedGlass style) */
+.container_zrUwGA,
+div[class*="container_zrUwGA"],
+.tabBody_zrUwGA,
+div[class*="tabBody_"] {
+  background: rgb(0, 0, 0, var(--middle-brightness)) !important;
+  border: none !important;
+}
+.peopleColumn_zrUwGA,
+div[class*="peopleColumn_"] {
+  background: transparent !important;
+  border: none !important;
+}
+.nowPlayingColumn_zrUwGA,
+div[class*="nowPlayingColumn_"] {
+  background: rgb(0, 0, 0, var(--right-brightness)) !important;
+  border: none !important;
+}
+div[class*="tabBody_"] [class*="itemCard_"],
+div[class*="tabBody_"] [class*="card_"],
+div[class*="container_zrUwGA"] [class*="itemCard_"],
+div[class*="container_zrUwGA"] [class*="card_"] {
+  border: none !important;
+  background: var(--foreground-half, rgba(255, 255, 255, 0.025)) !important;
+}
+div[class*="tabBody_"] [class*="itemCard_"]:hover,
+div[class*="tabBody_"] [class*="card_"]:hover,
+div[class*="container_zrUwGA"] [class*="itemCard_"]:hover,
+div[class*="container_zrUwGA"] [class*="card_"]:hover {
+  background: var(--foreground, rgba(255, 255, 255, 0.05)) !important;
+}
+
+/* Members List */
+.membersWrap_86es0b,
+.container_86es0b,
+aside[class*="membersWrap_"],
+div[class*="membersWrap_"] {
+  background-color: rgb(0, 0, 0, var(--right-brightness)) !important;
+  border-left: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+.members_86es0b,
+div[class*="members_"],
+div[class*="membersWrap_"] [class*="members_"] {
+  background: transparent !important;
+}
+.member_Iy0c7A,
+div[class*="member_"] {
+  background: transparent !important;
+}
+.member_Iy0c7A.selected_Iy0c7A [class*="layout_"],
+div[class*="member_"][class*="selected_"] [class*="layout_"] {
+  background: var(--gradient) !important;
+}
+
+/* Activity / Now Playing cards in Member list */
+.container_pmhtZL,
+.card_k5CETD,
+div[class*="activity_"] [class*="itemCard_"],
+aside[class*="membersWrap_"] [class*="card_"],
+aside[class*="membersWrap_"] [class*="itemCard_"] {
+  background: var(--foreground-half, rgba(255, 255, 255, 0.025)) !important;
+  border: none !important;
+}
+.container_pmhtZL:hover,
+.card_k5CETD:hover,
+aside[class*="membersWrap_"] [class*="card_"]:hover,
+aside[class*="membersWrap_"] [class*="itemCard_"]:hover {
+  background: var(--foreground, rgba(255, 255, 255, 0.05)) !important;
+}
+
+/* Activity Icons & Badges: always bright & full color, no dull grey */
+[class*="activity"] svg,
+[class*="activity"] img,
+[class*="activityIcon"],
+[class*="gameIcon"],
+aside[class*="membersWrap_"] [class*="activity"] svg,
+aside[class*="membersWrap_"] [class*="card_"] svg,
+aside[class*="membersWrap_"] [class*="card_"] img,
+aside[class*="membersWrap_"] [class*="itemCard_"] svg,
+aside[class*="membersWrap_"] [class*="itemCard_"] img,
+div[class*="nowPlayingColumn_"] [class*="itemCard_"] svg,
+div[class*="nowPlayingColumn_"] [class*="itemCard_"] img,
+button[aria-label*="Activity"] svg,
+button[aria-label*="Активн"] svg {
+  color: #fff !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* User Profile Sidebar (in DMs) */
+.outer_P1YEjQ,
+div[class*="outer_P1YEjQ"],
+div[class*="user-profile-sidebar"] {
+  background-color: rgb(0, 0, 0, var(--right-brightness)) !important;
+  border-left: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+.outer_P1YEjQ .inner_P1YEjQ,
+div[class*="outer_P1YEjQ"] div[class*="inner_"] {
+  background: transparent !important;
+}
+.overlay_P1YEjQ,
+div[class*="overlay_"] {
+  background-color: var(--foreground, rgba(255, 255, 255, 0.05)) !important;
+}
+
+/* User Popouts & Profile Modals Frosted Background (Instant GPU-accelerated blur) */
+:is(
+  .user-profile-popout,
+  .user-profile-modal,
+  .user-profile-modal-v2,
+  div[class*="userPopoutOuter_"],
+  div[class*="userProfileModalOuter_"],
+  div[class*="userProfileOuter_"],
+  div[class*="profileCard_"],
+  div[class*="root_"]:has([class*="userProfile"]),
+  div[class*="root_"]:has([class*="userPopout"]),
+  div[class*="modalRoot_"]:has([class*="userProfile"])
+) {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 8px !important;
+  background-color: rgba(18, 18, 24, 0.8) !important;
+  backdrop-filter: blur(16px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.2) !important;
+  transform: translateZ(0) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+
+  &::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: var(--popout-modal-image, var(--popout-image, var(--background-image))) center / cover no-repeat !important;
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    z-index: 0 !important;
+  }
+
+  > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+}
+
+/* Neutralize Discord solid profile colors in popouts and modals */
+[class*="userProfile"],
+[class*="userPopout"],
+div[class*="root_"]:has([class*="userProfile"]) {
+  --profile-body-background-color: transparent !important;
+  --profile-gradient-primary-color: transparent !important;
+  --profile-gradient-secondary-color: transparent !important;
+  --profile-gradient-overlay-color: transparent !important;
+  --profile-body-background-color-50: transparent !important;
+  --bg-base-tertiary: transparent !important;
+}
+
+/* Profile modal inner containers and pseudo-elements */
+div[class*="userProfileInner_"],
+div[class*="userProfileModalInner_"],
+div[class*="userPopoutInner_"],
+div[class*="biteSizeInner_"],
+div[class*="fullSizeInner_"],
+div[class*="topSection_"],
+div[class*="body_"],
+div[class*="profilePanel_"],
+div[class*="leftColumn_"],
+div[class*="rightColumn_"],
+div[class*="contentColumn_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+div[class*="userProfileInner_"]::before,
+div[class*="userProfileModalInner_"]::before,
+div[class*="userPopoutInner_"]::before,
+div[class*="biteSizeInner_"]::before,
+div[class*="fullSizeInner_"]::before,
+div[class*="topSection_"]::before,
+div[class*="body_"]::before {
+  background: transparent !important;
+  background-color: transparent !important;
+  display: none !important;
+}
+
+/* Left Column in User Profile Modal (Frosted translucent card) */
+:is(
+  aside[class*="profile_"],
+  div[class*="profilePanel_"],
+  div[class*="leftColumn_"],
+  div[class*="userProfileSidebar_"],
+  div[class*="userProfileModalInner_"] > aside,
+  div[class*="userProfileModalInner_"] > div:first-of-type:not([class*="tabBar_"]):not([class*="closeButton_"]):not(button)
+) {
+  background: rgba(0, 0, 0, 0.4) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-radius: 8px !important;
+}
+
+div[class*="overlayBackground_"],
+div[class*="userProfileModalOverlayBackground_"] {
+  background: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-radius: 8px !important;
+}
+
+/* Profile Modal Tab Bar */
+div[class*="tabBar_"],
+div[class*="tabBarContainer_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* User profile modal widgets & cards (Games, Activities, Mutuals) */
+:is(
+  div[class*="containerCard_"],
+  div[class*="sectionCard_"],
+  div[class*="profileWidget_"],
+  div[class*="widget_"],
+  div[class*="widgetSection_"],
+  div[class*="favoriteGames_"],
+  div[class*="activityCard_"],
+  div[class*="activity_"],
+  div[class*="connections_"],
+  div[class*="mutualGuilds_"],
+  div[class*="mutualFriends_"],
+  div[class*="card_"]:not([class*="userProfileOuter_"]):not([class*="userProfileModalOuter_"]):not([class*="modal_"]):not([class*="root_"]),
+  div[class*="itemCard_"],
+  div[class*="listRow_"]
+) {
+  background: rgba(0, 0, 0, 0.35) !important;
+  background-color: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-radius: 8px !important;
+}
+
+:is(
+  div[class*="containerCard_"],
+  div[class*="sectionCard_"],
+  div[class*="profileWidget_"],
+  div[class*="widget_"],
+  div[class*="widgetSection_"],
+  div[class*="favoriteGames_"],
+  div[class*="activityCard_"],
+  div[class*="card_"]:not([class*="userProfileOuter_"]):not([class*="userProfileModalOuter_"]):not([class*="modal_"]):not([class*="root_"]),
+  div[class*="itemCard_"],
+  div[class*="listRow_"]
+):hover {
+  background: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Header & Titlebar Cleanups */
+.title_f75fb0,
+section[class*="title_"],
+section[class*="container_"][class*="themed_"],
+section[class*="container_"]:has(div[class*="children_"]),
+div[class*="container_"][class*="themed_"],
+div[class*="headerBar_"],
+div[class*="upperContainer_"],
+header[class*="header_"],
+div[class*="subtitleContainer_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+div[class*="children_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+div[class*="bar_3zSH5d"],
+div[class*="titleBar_"] {
+  background: transparent !important;
+  border: none !important;
+}
+div[class*="subtitleContainer_"]::before,
+header[class*="header_"]::before {
+  display: none !important;
+}
+
+/* Notices & In-app Banners */
+div[class*="notice_"],
+div[class*="notice__"],
+div[class*="dismissibleNotice_"],
+div[class*="actionNotice_"],
+div[class*="sparkleBanner_"],
+div[class*="noticeContainer_"] {
+  background: rgba(0, 0, 0, 0.4) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-radius: 8px !important;
+}
+div[class*="notice_"] button,
+div[class*="notice__"] button {
+  background: transparent !important;
+}
+
+/* Hide redundant server/channel name in top window titlebar */
+div[class*="bar_"] > div[class*="title_"],
+.title_c38106,
+.title_3zSH5d {
+  display: none !important;
+}
+
+/* Remove dark vertical divider in header */
+.children_ybUK7Z::after,
+.children_ybUK7Z::before,
+div[class*="children_"]::after,
+div[class*="children_"]::before,
+section[class*="title_"] div[class*="children_"]::after,
+header[class*="header_"] div[class*="children_"]::after,
+.divider_hHhMrs,
+[class*="divider_hHhMrs"],
+div[class*="children_"] > div[class*="divider_"],
+section[class*="title_"] [class*="divider_"],
+header[class*="header_"] [class*="divider_"],
+div[class*="upperContainer_"] [class*="divider_"],
+div[class*="toolbar_"]::before,
+div[class*="toolbar_"]::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Store & Settings */
+.applicationStore_6U3jXZ,
+.shopScroll_4Qm5zV,
+.page_4Qm5zV,
+div[class*="applicationStore_"],
+div[class*="shopScroll_"],
+div[class*="page_"] {
+  background: transparent !important;
+}
+/* Settings Modal & Sidebar View */
+.standardSidebarView_jnk11m,
+div[class*="standardSidebarView_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+div[class*="root_"]:not([class*="userProfile"]):not([class*="userPopout"]),
+div[class*="modal_"]:not([class*="userProfile"]):not([class*="userPopout"]),
+div[class*="modalRoot_"]:not([class*="userProfile"]):not([class*="userPopout"]) {
+  background-color: rgba(18, 18, 24, 0.75) !important;
+  backdrop-filter: blur(16px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.2) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+}
+
+/* Settings categories sidebar: frosted glass with blur instead of solid black */
+.sidebarRegion_jnk11m,
+.sidebarRegionScroller_jnk11m,
+div[class*="sidebarRegion_"],
+div[class*="sidebarRegionScroller_"],
+div[class*="sidebarRegion_"] nav,
+div[class*="sidebarRegion_"] div[class*="sidebar_"],
+div[class*="sidebar_"]:has(div[class*="side_"]) {
+  background: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-right: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+}
+
+.contentRegion_jnk11m,
+div[class*="contentRegion_"],
+.contentRegionScroller_jnk11m,
+div[class*="contentRegionScroller_"],
+div[class*="contentColumn_"],
+div[class*="customColumn_"],
+div[class*="customScroller_"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+div[class*="sidebarRegion_"] div[class*="side_"] div[class*="item_"][aria-selected="true"],
+div[class*="sidebarRegion_"] div[class*="side_"] div[class*="item_"][class*="selected_"] {
+  background: var(--gradient) !important;
+  color: #fff !important;
+}
+div[class*="sidebarRegion_"] div[class*="side_"] div[class*="item_"]:hover:not([aria-selected="true"]):not([class*="selected_"]) {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Selection and accents */
+::selection {
+  background: rgb(var(--gradient-primary)) !important;
+  color: #fff !important;
+}
+a, [class*="anchor_"] {
+  color: var(--link-colour) !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-colour) !important;
+  border-radius: 4px !important;
+}
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+/* Suppress obsolete error banner */
+html #app-mount div[class*="app_"]::before {
+  display: none !important;
+}
